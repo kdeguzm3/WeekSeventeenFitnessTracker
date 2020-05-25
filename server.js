@@ -1,13 +1,23 @@
-const express = require( 'express' );
-const app = express ();
-const port = process.env.PORT || 1738; 
-const mongoose = require ( 'mongoose' );
+//Modules
+const express = require ( 'express' );
+const app = express();
+const mongoose = require ('mongoose');
+const apiRoutes = require ('./routes/apiRoutes');
+const HTMLRoutes = require ('./routes/HTMLroutes');
 
-app.get('/', (req, res) => res.send('Hello World!'));
+//Variables
+const PORT = process.env.PORT || 3030; 
+const mondoURL = process.env.MONGODB_URI || "mongodb://localhost/workout";
 
-app.use(express.static('public'));
 
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/mongoose_db", { useUnifiedTopology: true, useNewUrlParser: true });
+//Main
 
-app.listen(port, () => console.log(`Server listening at http://localhost:${port}`));
+app.use (express.static ('public'));
 
+app.use ('/api', apiRoutes);
+
+app.use ('/', HTMLRoutes);
+
+app.listen ( PORT, () => {
+    console.log ( "started server at http://localhost:" + PORT );
+} )

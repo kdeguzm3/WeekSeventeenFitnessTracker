@@ -15,9 +15,14 @@ const workoutSchema = new Schema (
                 sets: Number
             }
         ]
+    }, 
+    {
+        collection: 'workouts'
     }
 );
 
 
 
-module.exports.Workout = mongoose.model ('Workouts', workoutSchema );
+module.exports = {
+Workout: mongoose.model ('Workouts', workoutSchema )
+}
