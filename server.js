@@ -1,8 +1,9 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const morgan = require('morgan');
-const apiRoutes = require ("./routes/apiRoutes");
-const htmlRoutes = require  ("./routes/htmlRoutes");
+const path = require ('path');
+const apiRoutes = require (path.join(__dirname, "./routes/apiRoutes"));
+const htmlRoutes = require  (path.join(__dirname, "./routes/apiRoutes"));
 
 
 const PORT = process.env.PORT || 1738;
