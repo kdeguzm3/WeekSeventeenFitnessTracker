@@ -1,16 +1,52 @@
-const router = require ( 'express' ).Router();
+const router = require("express").Router();
+const Workout = require("../models/workout");
 
-const mongoose = require("mongoose");
-const db = require("../models");
+router.get("/workouts", (req, res) =>{
+    Workout.find()
+        .then((workouts) => {
+            res.json(workouts)
+        })
+        .catch((err) => {
+            res.json(err);
+            console.log(err);
+        })
+})
 
-mongoose.connect("mongodb://localhost/workout", {
-  useNewUrlParser: true,
-  useFindAndModify: false
+router.get("/workouts/range", (req, res) => {
+    Workout.find({})
+    .then(docs => {
+        res.json(docs);
+    })
+    .catch((err) => {
+        res.json(err);
+        console.log(err);
+    })
+})
+
+router.post("/workouts", ({body}, res) =>{
+    Workout.create(body)
+    .then(docs => {
+        res.json(docs);
+    })
+    .catch((err) => {
+        res.json(err);
+        console.log(err);
+    })
+})
+
+router.put("/workouts/:id", ({ body, params: {id} }, res) => {
+    Workout.findByIdAndUpdate(id, {$push: {exercises: body}},
+        )
+        .then(docs => {
+            res.json(docs);
+        })
+        .catch((err) => {
+            res.json(err);
+            console.log(err);
+        });
 });
 
-router.get ('/workouts', (req, res) => {
-    db.Workout.find()
-        .then (docs => res.json (docs))
-})
+
+
 
 module.exports = router;

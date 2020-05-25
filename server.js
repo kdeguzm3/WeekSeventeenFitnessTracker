@@ -1,23 +1,33 @@
-//Modules
-const express = require ( 'express' );
+const express = require("express");
+const mongoose = require("mongoose");
+const morgan = require('morgan');
+const apiRoutes = require ("./routes/apiRoutes");
+const htmlRoutes = require  ("./routes/htmlRoutes");
+
+
+const PORT = process.env.PORT || 1738;
+
 const app = express();
-const mongoose = require ('mongoose');
-const apiRoutes = require ('./routes/apiRoutes');
-const HTMLRoutes = require ('./routes/HTMLroutes');
 
-//Variables
-const PORT = process.env.PORT || 3030; 
-const mondoURL = process.env.MONGODB_URI || "mongodb://localhost/workout";
+app.use(morgan("dev"));
+
+app.use(express.static(__dirname + "/public"));
+
+app.use(express.urlencoded({extended: true}));
+app.use(express.json());
 
 
-//Main
 
-app.use (express.static ('public'));
+const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/workout";
 
-app.use ('/api', apiRoutes);
+mongoose.connect(MONGODB_URI, {
+    useNewUrlParser: true,
+    useFindAndModify: false
+})
 
-app.use ('/', HTMLRoutes);
+app.use("/api", apiRoutes);
+app.use("/", htmlRoutes);
 
-app.listen ( PORT, () => {
-    console.log ( "started server at http://localhost:" + PORT );
-} )
+app.listen(PORT, () => {
+    console.log(`Server started on http://localhost:${PORT}`);
+});
