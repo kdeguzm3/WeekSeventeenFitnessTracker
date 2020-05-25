@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const morgan = require('morgan');
 const path = require ('path');
 const apiRoutes = require(path.join(__dirname, "./routes/apiRoutes"));
-const htmlRoutes = require(path.join(__dirname, "./routes/htmlRoutes.js"));
+const htmlRoutes = require(path.join(__dirname, "./routes/htmlroutes"));
 
 const PORT = process.env.PORT || 1738;
 
